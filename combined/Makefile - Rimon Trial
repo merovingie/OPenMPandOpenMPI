@@ -1,0 +1,25 @@
+CC= gcc
+LINK= mpicc
+
+OMPFLAGS = -fopenmp
+OMPLIBS = -lgomp
+
+CFLAGS = -g -std=gnu99 -I. -I../omp -I../mpi -Wall $(OMPFLAGS)
+LDLIBS = $(OMPLIBS) -lm
+INCLUDES = /usr/include/mpich
+
+all: combined_omp1_mp1
+
+SRCS_OMP1_MPI1 := $(wildcard *.c) ../mpi/gtmpi1.c ../omp/gtmp1.c
+OBJS_OMP1_MPI1 = $(SRCS_OMP1_MPI1:.c=.o)
+
+%.o: %.c
+        $(CC) -c -v $(CFLAGS) -I$(INCLUDES) $(OMPFLAGS)  $< -o $@
+
+combined: combined_omp1_mp1
+
+combined_omp1_mp1: $(OBJS_OMP1_MPI1)
+        $(LINK) -o $@ $(CFLAGS) $(LDFLAGS) $^ $(LDLIBS)
+
+clean:
+        rm -rf *.o *.dSYM combined

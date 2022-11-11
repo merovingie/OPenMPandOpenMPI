@@ -1,0 +1,6 @@
+combined anomalies:
+7 nodes 1 thread iter def-1000 - total threads 7: 4479;4137;4364;4089;4249;4436;4107;
+2 nodes 5 thread iter def-1000 - total threads 10: 7184;7090;
+Iterations anomalies:
+4 nodes 4 thread iter 2000: 19444;19072;19585;19624;
+4 nodes 4 thread iter 5000: 46294382;46294246;46294393;46293896;

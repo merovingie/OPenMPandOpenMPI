@@ -1,0 +1,21 @@
+#PBS -N cs6210-proj2-combinedhello
+#PBS -l nodes=2:ppn=8
+#PBS -l nodes=rich133-h35-16-l.pace.gatech.edu+rich133-k40-17.pace.gatech.edu
+#PBS -l pmem=1gb
+#PBS -l walltime=00:05:00
+#PBS -q coc-ice
+#PBS -j oe
+#PBS -o combined_hello.out
+
+echo "Started on `/bin/hostname`"
+echo "Nodes chosen are:"
+cat $PBS_NODEFILE
+
+cd ~/examples
+
+module load gcc/4.9.0 mvapich2/2.3
+export OMP_NUM_THREADS=8
+
+/usr/local/pacerepov1/openmpi/1.8/gcc-4.9.0/bin/mpicc -Wall -lm -fopenmp -lgomp combined_hello.c -o combined_hello
+
+/usr/local/pacerepov1/openmpi/1.8/gcc-4.9.0/bin/mpirun -np 2 ./combined_hello

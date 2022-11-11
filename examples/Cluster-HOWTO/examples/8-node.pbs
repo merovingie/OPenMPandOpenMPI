@@ -1,0 +1,19 @@
+#PBS -N cs6210-proj2-mpihello
+#PBS -l nodes=8:ncpus=1:mpiprocs=1
+#PBS -l nodes=rich133-h35-16-l.pace.gatech.edu+rich133-k40-17.pace.gatech.edu+rich133-k40-18.pace.gatech.edu+rich133-k40-29.pace.gatech.edu+rich133-k40-30.pace.gatech.edu+rich133-s30-10.pace.gatech.edu+rich133-s30-11.pace.gatech.edu+rich133-s30-12.pace.gatech.edu
+#PBS -l pmem=1gb
+#PBS -l walltime=00:05:00
+#PBS -q coc-ice
+#PBS -j oe
+#PBS -o mpi_hello.out
+
+echo "Started on `/bin/hostname`"
+echo "Nodes chosen are:"
+cat $PBS_NODEFILE
+
+cd ~/examples
+
+module load gcc mvapich2/2.3
+/usr/local/pacerepov1/openmpi/1.8/gcc-4.9.0/bin/mpicc -Wall mpi_hello.c -o mpi_hello
+
+/usr/local/pacerepov1/openmpi/1.8/gcc-4.9.0/bin/mpirun -np 8 ./mpi_hello

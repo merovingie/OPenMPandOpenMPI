@@ -1,0 +1,7 @@
+image:
+  file: dockerfile
+tasks:
+  - name: Evnironment
+    command: | 
+        cd omp
+        make

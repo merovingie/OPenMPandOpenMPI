@@ -1,0 +1,19 @@
+#PBS -N cs6210-proj2-mphello
+#PBS -l nodes=1:ppn=8
+#PBS -l pmem=1gb
+#PBS -l walltime=00:05:00
+#PBS -q coc-ice
+#PBS -j oe
+#PBS -o mp_hello.out
+
+echo "Started on `/bin/hostname`"
+echo "Nodes chosen are:"
+cat $PBS_NODEFILE
+
+cd ~/examples
+
+module load gcc gcc/4.9.0
+export OMP_NUM_THREADS=8
+
+gcc -fopenmp mp_hello.c -o mp_hello
+./mp_hello
